@@ -1,4 +1,5 @@
 const { trips } = require('../models/Trip');
+const { db } = require('../db.js')
 
 // Retrieve all trips
 const retrieveAllTrips = (req, res) => {
@@ -69,3 +70,21 @@ module.exports = {
   createTrip,
   retrieveAllTrips
 };
+
+
+
+// Create a new trip
+const createTrip = (req, res) => {
+    const {
+        destinationName, location, continent, language, description,
+        flightCost = 0, accommodationCost = 0, mealCost = 0, visaCost = 0, transportationCost = 0, currencyCode = 'N/A'
+    } = req.body;
+
+    if (!destinationName || !location || !continent || !language || !description) {
+        return res.status(400).json({
+            message:
+                'Missing required fields: destinationName, location, continent, language, and description are mandatory.'
+        });
+    }
+}
+
