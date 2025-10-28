@@ -16,3 +16,19 @@ const createTripTable = `CREATE TABLE IF NOT EXISTS TRIP (
     TRANSPORTATIONCOST REAL DEFAULT 0,
     CURRENCYCODE TEXT DEFAULT 'N/A'
 )`;
+
+
+
+
+
+
+
+
+
+
+
+module.exports = {
+    db,
+    createTripTable,
+    createUserTable,
+};
