@@ -1,7 +1,7 @@
 const { trips } = require('../models/Trip');
 const { db } = require('../db.js')
 
-// Retrieve all trips
+/*// Retrieve all trips
 const retrieveAllTrips = (req, res) => {
   const allTrips = trips;
   res.status(200).json({
@@ -63,13 +63,10 @@ const createTrip = (req, res) => {
     message: 'Trip created successfully',
     data: newTrip,
   });
-};
+};*/
 
 
-module.exports = {
-  createTrip,
-  retrieveAllTrips
-};
+
 
 
 
@@ -86,7 +83,7 @@ const createTrip = (req, res) => {
                 'Missing required fields: destinationName, location, continent, language, and description are mandatory.'
         });
     }
-}
+
   const query = `
     INSERT INTO TRIP (
         DESTINATIONNAME, LOCATION, CONTINENT, LANGUAGE, DESCRIPTION, 
@@ -113,3 +110,27 @@ const createTrip = (req, res) => {
             message: 'Trip created successfully'
         });
     });
+
+  };
+
+  // Retrieve all trips
+const retrieveAllTrips = (req, res) => {
+  const query = 'SELECT * FROM TRIP';
+
+  db.all(query, (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ message: 'Error retrieving trips' });
+    }
+
+    return res.status(200).json({
+      message: 'Trips retrieved successfully',
+      data: rows
+    });
+  });
+};
+
+    module.exports = {
+  createTrip,
+  retrieveAllTrips
+};
