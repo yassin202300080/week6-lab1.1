@@ -194,6 +194,27 @@ db.run(query, function (err) {
   });
 };
 
+// Delete a trip by ID
+const deleteTripByIds = (req, res) => {
+  const id = Number(req.params.id);
+  const index = trips.findIndex(t => t.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Trip not found.',
+    });
+  }
+
+  trips.splice(index, 1);
+
+  res.status(204).json({
+    status: 'success',
+    message: 'Trip deleted successfully',
+    data: null,
+  });
+};
+
     module.exports = {
   createTrip,
   retrieveAllTrips
