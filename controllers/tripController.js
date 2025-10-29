@@ -148,6 +148,52 @@ const retrieveTripById = (req, res) => {
   });
 };
 
+// Update a trip by ID
+const updateTripById = (req, res) => {
+  const id = req.params.id;
+  const {
+    destinationName,
+    location,
+    continent,
+    language,
+    description,
+    flightCost,
+    accommodationCost,
+    mealCost,
+    visaCost,
+    transportationCost,
+    currencyCode
+  } = req.body;
+
+  const query = `
+  UPDATE TRIP SET
+    DESTINATIONNAME = '${destinationName}',
+    LOCATION = '${location}',
+    CONTINENT = '${continent}',
+    LANGUAGE = '${language}',
+    DESCRIPTION = '${description}',
+    FLIGHTCOST = ${flightCost},
+    ACCOMMODATIONCOST = ${accommodationCost},
+    MEALCOST = ${mealCost},
+    VISACOST = ${visaCost},
+    TRANSPORTATIONCOST = ${transportationCost},
+    CURRENCYCODE = '${currencyCode}'
+  WHERE ID = ${id}
+`;
+
+db.run(query, function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ message: 'Database error' });
+    }
+
+    if (this.changes === 0)
+      return res.status(404).json({ message: 'Trip not found' });
+
+    return res.status(200).json({ message: 'Trip updated successfully' });
+  });
+};
+
     module.exports = {
   createTrip,
   retrieveAllTrips
